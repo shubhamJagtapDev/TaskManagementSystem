@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4186cd12-4cc1-41c4-a2bc-c31f87d8791d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/spec/TaskManagementSpec.md" beforeDir="false" afterPath="$PROJECT_DIR$/spec/TaskManagementSpec.md" afterDir="false" />
+    <list default="true" id="4186cd12-4cc1-41c4-a2bc-c31f87d8791d" name="Changes" comment="Initial Commit - Implement the first two feature sets">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,12 +58,36 @@
       <option name="presentableId" value="Default" />
       <updated>1776253454055</updated>
       <workItem from="1776253455248" duration="219000" />
-      <workItem from="1776253748818" duration="4996000" />
+      <workItem from="1776253748818" duration="6969000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial Commit - Implement the first two feature sets">
+      <option name="closed" value="true" />
+      <created>1776313825776</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1776313825776</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit - Implement the first two feature sets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit - Implement the first two feature sets" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -54,7 +54,7 @@ We need to plan our design according to following specifications
    - **Function Specification: `updateUserQuota`**
      - **Requirement:** Updates the maximum active task quota for a specific user dynamically.
      - **Input Parameters:** `timestamp` (int), `user_id` (String), `new_quota` (int)
-     - **Output Type:** `void` or `boolean`
+     - **Output Type:**  `boolean` (true if successful or false the `new_quota` is <=0)
      - **Edge Cases:**
        - The new quota is explicitly set extremely low (e.g., 0).
        - New quota is less than the user's currently active tasks (should still allow update but prevent new assignments).

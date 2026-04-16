@@ -4,16 +4,25 @@ import java.util.Map;
 import java.util.Optional;
 
 import comparators.TaskComparator;
+import models.AssignedTask;
 import models.Task;
+import models.TaskStatus;
+import models.User;
+import services.UserService;
+import services.UserServiceImpl;
 
 public class TaskManagerImpl implements TaskManager {
     private Map<String, Task> tasksMap;
+    private Map<String, AssignedTask> assignedTaskMap;
     private TaskComparator taskComparator;
+    private UserService userService;
     private long tasksCount;
 
     public TaskManagerImpl() {
         tasksMap = new HashMap<>();
+        assignedTaskMap = new HashMap<>();
         taskComparator = new TaskComparator();
+        userService = new UserServiceImpl();
         tasksCount = 0;
     }
 
@@ -69,4 +78,63 @@ public class TaskManagerImpl implements TaskManager {
                 .limit(limit)
                 .toList();
     }
+
+    @Override
+    public boolean assignTask(int timestamp, String taskId, String userId, int ttl) {
+        // task validations
+        if (!tasksMap.containsKey(taskId))
+            return false;
+        if (assignedTaskMap.containsKey(taskId)
+                && assignedTaskMap.get(taskId).getStatus().equals(TaskStatus.COMPLETED)) {
+            // note: here we could have sent a detailed error json message specifying why we
+            // are
+            // not assigning this task to the user, however to keep it simple for now
+            // I'm returning true if success or false for any kind of failure/error
+
+            return false;
+        }
+
+        Optional<User> optionalUser = userService.getUser(userId);
+        if (optionalUser.isEmpty())
+            throw new RuntimeException("User does not exist");
+        User user = optionalUser.get();
+
+        AssignedTask assignedTask = new AssignedTask();
+        if (assignedTaskMap.containsKey(taskId)) {
+            assignedTask = assignedTaskMap.get(taskId);
+        }
+        // user has quota to take up the task
+        if (user.getAssignedTaskCount() < user.getQuotaLimit()) {
+            assignedTask.setStatus(TaskStatus.NOT_STARTED);
+            assignedTask.setTask_id(taskId);
+            assignedTask.setUser_id(userId);
+            assignedTask.setTtl(ttl);
+            user.setAssignedTaskCount(user.getAssignedTaskCount() + 1);
+            // after this we usually call save method of user repository
+            // but we have in-memory DB and we have direct reference to user obj, then it
+            // doesn't make
+            // sense to call save method again in this case only
+
+            assignedTaskMap.put(taskId, assignedTask);
+            return true;
+        }
+        // we cannot assign the task to user as the user has reached their dynamic quota
+        // limit
+        return false;
+    }
+
+    @Override
+    public boolean updateUserQuota(int timestamp, String userId, int newQuota) {
+        if (newQuota <= 0) {
+            return false;
+        }
+        Optional<User> optionalUser = userService.getUser(userId);
+        if (optionalUser.isEmpty()) {
+            throw new RuntimeException("user does not exist");
+        }
+        User user = optionalUser.get();
+        user.setQuotaLimit(newQuota);
+        return true;
+    }
+
 }
