@@ -49,7 +49,7 @@ public class Task {
         StringBuilder json = new StringBuilder();
         json.append("{")
                 .append("\"name\":\"").append(this.name).append("\",")
-                .append("\"priority\":\"").append(priority)
+                .append("\"priority\":").append(priority)
                 .append("}");
         return json.toString();
     }

@@ -4,7 +4,6 @@
     <list default="true" id="4186cd12-4cc1-41c4-a2bc-c31f87d8791d" name="Changes" comment="feat: implement task completion logic and overdue task retrieval in TaskManagerImpl">
       <change beforePath="$PROJECT_DIR$/src/TaskManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskManagerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +20,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6,
@@ -60,7 +62,7 @@
       <option name="presentableId" value="Default" />
       <updated>1776253454055</updated>
       <workItem from="1776253455248" duration="219000" />
-      <workItem from="1776253748818" duration="11584000" />
+      <workItem from="1776253748818" duration="13550000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit - Implement the first two feature sets">
       <option name="closed" value="true" />

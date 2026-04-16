@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +45,8 @@ public class TaskManagerImpl implements TaskManager {
             return false;
         }
         Task task = tasksMap.get(taskId);
-        task.setName(name);
+        if (name != null && !name.isEmpty())
+            task.setName(name);
         task.setPriority(priority);
         return true;
     }
