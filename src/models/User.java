@@ -3,11 +3,9 @@ package models;
 public class User {
     private String user_id;
     private String name;
-    private int assignedTaskCount;
     private int quotaLimit;
 
     public User(String name, int quotaLimit) {
-        this.assignedTaskCount = 0;
         this.quotaLimit = quotaLimit;
         this.name = name;
     }
@@ -18,14 +16,6 @@ public class User {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
-    }
-
-    public int getAssignedTaskCount() {
-        return assignedTaskCount;
-    }
-
-    public void setAssignedTaskCount(int assignedTaskCount) {
-        this.assignedTaskCount = assignedTaskCount;
     }
 
     public int getQuotaLimit() {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4186cd12-4cc1-41c4-a2bc-c31f87d8791d" name="Changes" comment="Initial Commit - Implement the first two feature sets">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="4186cd12-4cc1-41c4-a2bc-c31f87d8791d" name="Changes" comment="feat: implement task completion logic and overdue task retrieval in TaskManagerImpl">
       <change beforePath="$PROJECT_DIR$/src/TaskManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskManagerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/AssignedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AssignedTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1776253454055</updated>
       <workItem from="1776253455248" duration="219000" />
-      <workItem from="1776253748818" duration="10781000" />
+      <workItem from="1776253748818" duration="11584000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit - Implement the first two feature sets">
       <option name="closed" value="true" />
@@ -70,7 +70,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776313825776</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: implement task completion logic and overdue task retrieval in TaskManagerImpl">
+      <option name="closed" value="true" />
+      <created>1776329018304</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776329018304</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -89,7 +97,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit - Implement the first two feature sets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit - Implement the first two feature sets" />
+    <MESSAGE value="feat: implement task completion logic and overdue task retrieval in TaskManagerImpl" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: implement task completion logic and overdue task retrieval in TaskManagerImpl" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

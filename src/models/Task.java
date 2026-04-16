@@ -32,6 +32,10 @@ public class Task {
         return taskId;
     }
 
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
+
     public int getTimestamp() {
         return timestamp;
     }
@@ -44,8 +48,8 @@ public class Task {
     public String toString() {
         StringBuilder json = new StringBuilder();
         json.append("{")
-                .append("\"name\":\"").append(this.name).append("\"")
-                .append("\"priority\"").append(priority)
+                .append("\"name\":\"").append(this.name).append("\",")
+                .append("\"priority\":\"").append(priority)
                 .append("}");
         return json.toString();
     }

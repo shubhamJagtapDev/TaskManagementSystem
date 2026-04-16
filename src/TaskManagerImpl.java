@@ -29,17 +29,22 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public String addTask(int timestamp, String name, int priority) {
+        if (name == null || name.isEmpty())
+            name = "Default Task";
         Task task = new Task(timestamp, name, priority);
         tasksCount += 1;
         String taskId = "task_id_" + tasksCount;
+        task.setTaskId(taskId);
         tasksMap.put(taskId, task);
         return taskId;
     }
 
     @Override
     public boolean updateTask(int timestamp, String taskId, String name, int priority) {
-        if (!tasksMap.containsKey(taskId))
+        if (!tasksMap.containsKey(taskId)) {
+            System.out.println("Task does not exists");
             return false;
+        }
         Task task = tasksMap.get(taskId);
         task.setName(name);
         task.setPriority(priority);
@@ -49,6 +54,7 @@ public class TaskManagerImpl implements TaskManager {
     @Override
     public Optional<String> getTask(int timestamp, String taskId) {
         if (!tasksMap.containsKey(taskId)) {
+            System.out.println("Task does not exists");
             return Optional.empty();
         }
 
@@ -57,13 +63,14 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public List<String> searchTasks(String nameFilter, int maxResults) {
-        if (maxResults <= 0)
+        if (maxResults <= 0) {
+            System.out.println("Request result count is <= 0");
             return List.of();
-        return tasksMap.entrySet().stream()
-                .map(entry -> entry.getValue())
+        }
+        return tasksMap.values().stream()
                 .filter(task -> task.getName().contains(nameFilter))
                 .sorted(taskComparator)
-                .map(taskObj -> taskObj.getTaskId())
+                .map(Task::getTaskId)
                 .limit(maxResults)
                 .toList();
     }
@@ -72,10 +79,9 @@ public class TaskManagerImpl implements TaskManager {
     public List<String> limitTasks(int limit) {
         if (limit <= 0)
             return List.of();
-        return tasksMap.entrySet().stream()
-                .map(entry -> entry.setValue(null))
+        return tasksMap.values().stream()
                 .sorted(taskComparator)
-                .map(taskObj -> taskObj.getTaskId())
+                .map(Task::getTaskId)
                 .limit(limit)
                 .toList();
     }
@@ -83,16 +89,25 @@ public class TaskManagerImpl implements TaskManager {
     @Override
     public boolean assignTask(int timestamp, String taskId, String userId, int ttl) {
         // task validations
-        if (!tasksMap.containsKey(taskId))
+        if (!tasksMap.containsKey(taskId)) {
+            System.out.println("Task does not exists");
             return false;
-        if (assignedTaskMap.containsKey(taskId)
-                && assignedTaskMap.get(taskId).getStatus().equals(TaskStatus.COMPLETED)) {
-            // note: here we could have sent a detailed error json message specifying why we
+        }
+        AssignedTask assignedTask;
+        if (assignedTaskMap.containsKey(taskId)) {
+            assignedTask = assignedTaskMap.get(taskId);
+            // note: here we could have sent a detailed error JSON message specifying why we
             // are
             // not assigning this task to the user, however to keep it simple for now
             // I'm returning true if success or false for any kind of failure/error
 
-            return false;
+            // If it exists, hasn't been completed, AND hasn't expired, it is actively
+            // assigned!
+            if (!assignedTask.getStatus().equals(TaskStatus.COMPLETED) && assignedTask.getTtl() > timestamp) {
+                return false;
+            }
+        } else {
+            assignedTask = new AssignedTask();
         }
 
         Optional<User> optionalUser = userService.getUser(userId);
@@ -100,19 +115,19 @@ public class TaskManagerImpl implements TaskManager {
             throw new RuntimeException("User does not exist");
         User user = optionalUser.get();
 
-        AssignedTask assignedTask = new AssignedTask();
-        if (assignedTaskMap.containsKey(taskId)) {
-            assignedTask = assignedTaskMap.get(taskId);
-        }
+        int activeTasksCount = (int) assignedTaskMap.values().stream()
+                .filter(t -> t.getUser_id().equals(userId))
+                .filter(t -> !t.getStatus().equals(TaskStatus.COMPLETED)) // only in progress tasks
+                .filter(t -> t.getTtl() > timestamp) // Make sure it's not overdue
+                .count();
         // user has quota to take up the task
-        if (user.getAssignedTaskCount() < user.getQuotaLimit()) {
+        if (activeTasksCount < user.getQuotaLimit()) {
             assignedTask.setStatus(TaskStatus.NOT_STARTED);
             assignedTask.setTask_id(taskId);
             assignedTask.setUser_id(userId);
-            assignedTask.setTtl(ttl);
-            user.setAssignedTaskCount(user.getAssignedTaskCount() + 1);
-            // after this we usually call save method of user repository
-            // but we have in-memory DB and we have direct reference to user obj, then it
+            assignedTask.setTtl(timestamp + ttl);
+            // after this we usually call save method of user repository,
+            // but we have in-memory DB, and we have direct reference to user obj, then it
             // doesn't make
             // sense to call save method again in this case only
 
@@ -170,7 +185,7 @@ public class TaskManagerImpl implements TaskManager {
 
     @Override
     public List<String> getOverdueTasks(int timestamp) {
-        List<String> expiredTaskIds = new ArrayList<>();
+        List<String> expiredTaskIds;
         expiredTaskIds = assignedTaskMap.values().stream()
                 .filter(assignedTask -> !assignedTask.getStatus().equals(TaskStatus.COMPLETED))
                 .filter(runningTask -> runningTask.getTtl() <= timestamp)
