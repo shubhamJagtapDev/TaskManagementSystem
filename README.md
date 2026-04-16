@@ -46,5 +46,5 @@ Operations like `completeTask()` intentionally implement idempotent short-circui
 * **Language:** Java 17+
 * **Framework:** Pure Core Java (No dependencies)
 * **Architecture:** Interface-Driven (`TaskManager`), Models, Repositories layer (in-memory hash maps), and service layouts.
-* **LLM Used:** Gemini 3.1 Pro (High) - Antigravity. I used the AI agent for code review and generation of this ReadMe and a small of the commit messages
+* **LLM Used:** Gemini 3.1 Pro (High) - Antigravity. I used the AI agent for code review and generation of this ReadMe and a small portions of the commit messages
 
