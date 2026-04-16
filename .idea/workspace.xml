@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4186cd12-4cc1-41c4-a2bc-c31f87d8791d" name="Changes" comment="Initial Commit - Implement the first two feature sets">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TaskManagerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TaskManagerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/AssignedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/AssignedTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1776253454055</updated>
       <workItem from="1776253455248" duration="219000" />
-      <workItem from="1776253748818" duration="6969000" />
+      <workItem from="1776253748818" duration="10781000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit - Implement the first two feature sets">
       <option name="closed" value="true" />

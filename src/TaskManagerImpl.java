@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,6 +136,47 @@ public class TaskManagerImpl implements TaskManager {
         User user = optionalUser.get();
         user.setQuotaLimit(newQuota);
         return true;
+    }
+
+    @Override
+    public boolean completeTask(int timestamp, String taskId) {
+        // is the task even exists
+        if (!tasksMap.containsKey(taskId)) {
+            System.out.println("Task does not exists");
+            return false;
+        }
+
+        // is the task even assigned to user
+        if (!assignedTaskMap.containsKey(taskId)) {
+            System.out.println("Task cannot be marked completed as its not being assigned yet");
+            return false;
+        }
+        AssignedTask assignedTask = assignedTaskMap.get(taskId);
+
+        // idempotency : return true as assigned task is already completed
+        if (assignedTask.getStatus().equals(TaskStatus.COMPLETED))
+            return true;
+
+        int taskTTL = assignedTask.getTtl();
+        // Task TTL expired and cannot be marked completed
+        if (taskTTL <= timestamp)
+            return false;
+
+        // mark task as completed as task TTL is after timestamp
+        assignedTask.setStatus(TaskStatus.COMPLETED);
+        assignedTask.setFinish_time(timestamp);
+        return true;
+    }
+
+    @Override
+    public List<String> getOverdueTasks(int timestamp) {
+        List<String> expiredTaskIds = new ArrayList<>();
+        expiredTaskIds = assignedTaskMap.values().stream()
+                .filter(assignedTask -> !assignedTask.getStatus().equals(TaskStatus.COMPLETED))
+                .filter(runningTask -> runningTask.getTtl() <= timestamp)
+                .map(AssignedTask::getTask_id)
+                .toList();
+        return expiredTaskIds;
     }
 
 }

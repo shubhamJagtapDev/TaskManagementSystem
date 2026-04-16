@@ -4,6 +4,7 @@ public class AssignedTask {
     private String task_id;
     private String user_id;
     private int ttl;
+    private int finish_time;
     private TaskStatus status;
 
     public TaskStatus getStatus() {
@@ -32,6 +33,14 @@ public class AssignedTask {
 
     public void setTtl(int ttl) {
         this.ttl = ttl;
+    }
+
+    public int getFinish_time() {
+        return finish_time;
+    }
+
+    public void setFinish_time(int finish_time) {
+        this.finish_time = finish_time;
     }
 
     public void setUser_id(String user_id) {
